@@ -2,89 +2,61 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Skibus - Verfügbare Plätze & Formular</title>
-  <script src="https://unpkg.com/tabletop@1.6.4/tabletop.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skibus – Posti Disponibili</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
       margin: 0;
       padding: 20px;
-      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .box {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px 25px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 15px;
       color: #333;
     }
-    h2 {
-      margin-top: 30px;
-      font-size: 20px;
-      color: #444;
-    }
-    table {
-      border-collapse: collapse;
+
+    iframe {
       width: 100%;
-      margin-bottom: 30px;
-      background-color: #fff;
+      height: 360px;
+      border: none;
+      border-radius: 10px;
     }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px 12px;
-      text-align: left;
-    }
-    th {
-      background-color: #e9ecef;
-      font-weight: bold;
+
+    @media (max-width: 600px) {
+      iframe {
+        height: 500px;
+      }
     }
   </style>
 </head>
 <body>
-  <h2>Verfügbare Plätze Hinfahrt / Posti disponibili Andata</h2>
-  <table id="andata">
-    <thead>
-      <tr><th>Uhrzeit / Orario</th><th>Verfügbare Plätze / Posti disponibili</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
 
-  <h2>Verfügbare Plätze Rückfahrt / Posti disponibili Ritorno</h2>
-  <table id="ritorno">
-    <thead>
-      <tr><th>Uhrzeit / Orario</th><th>Verfügbare Plätze / Posti disponibili</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <div class="box">
+    <h2>Posti Andata / Hinfahrt</h2>
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1313010596&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+  </div>
 
-  <h2>📝 Buchungsformular / Modulo di Prenotazione</h2>
-  <iframe src="https://www.cognitoforms.com/f/aBV3tAulW0uGumhc-X2ypQ/1" allow="payment" style="border:0;width:100%;" height="1594"></iframe>
-  <script src="https://www.cognitoforms.com/f/iframe.js"></script>
+  <div class="box">
+    <h2>Posti Ritorno / Rückfahrt</h2>
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1767518393&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+  </div>
 
-  <script>
-    const publicURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pub?output=csv";
-
-    function showData(data) {
-      const andataBody = document.querySelector("#andata tbody");
-      const ritornoBody = document.querySelector("#ritorno tbody");
-
-      data.forEach(row => {
-        const fascia = row["Fascia oraria"] || "";
-        const posti = row["Posti Rimasti"] || "";
-        const tipo = row["Tipo"] || "";
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${fascia}</td><td>${posti}</td>`;
-
-        if (tipo.toLowerCase() === "andata") {
-          andataBody.appendChild(tr);
-        } else if (tipo.toLowerCase() === "ritorno") {
-          ritornoBody.appendChild(tr);
-        }
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      Tabletop.init({
-        key: publicURL,
-        simpleSheet: true,
-        callback: showData
-      });
-    });
-  </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Skibus – Posti Disponibili</title>
+  <title>Skibus – Verfügbarkeit / Disponibilità</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,7 +13,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 30px;
+      gap: 20px;
     }
 
     .header {
@@ -38,6 +38,19 @@
       margin: 0;
     }
 
+    .intro {
+      text-align: center;
+      max-width: 800px;
+      padding: 0 15px;
+      font-size: 16px;
+      color: #444;
+      margin-top: 10px;
+    }
+
+    .intro p {
+      margin: 6px 0;
+    }
+
     .box {
       background-color: white;
       border-radius: 15px;
@@ -45,7 +58,6 @@
       padding: 20px 25px;
       max-width: 600px;
       width: 90%;
-      margin-top: 10px;
     }
 
     h2 {
@@ -62,6 +74,29 @@
       border-radius: 10px;
     }
 
+    .update-info {
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .refresh-button {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #3aafa9;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .refresh-button:hover {
+      background-color: #2b7a78;
+    }
+
     @media (max-width: 600px) {
       iframe {
         height: 500px;
@@ -70,6 +105,10 @@
       .header h1 {
         font-size: 18px;
       }
+
+      .intro {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
@@ -77,24 +116,61 @@
 
   <div class="header">
     <img src="https://img.icons8.com/ios-filled/50/ffffff/bus.png" alt="Bus Icon">
-    <h1>Disponibilità Skibus / Skibus Verfügbarkeit</h1>
+    <h1>Skibus Verfügbarkeit / Disponibilità Skibus</h1>
+  </div>
+
+  <div class="intro">
+    <p>Hier können Sie die noch verfügbaren Plätze für den Skibus einsehen.</p>
+    <p>Qui puoi consultare i posti ancora disponibili per il servizio Skibus.</p>
+    <p>Die Daten werden alle 20 Sekunden automatisch aktualisiert.</p>
+    <p>I dati si aggiornano automaticamente ogni 20 secondi.</p>
   </div>
 
   <div class="box">
-    <h2>Posti Andata / Hinfahrt</h2>
-    <iframe id="andata" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1313010596&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <h2>Hinfahrt / Posti Andata</h2>
+    <div class="update-info" id="updateAndata">🔄 Letzte Aktualisierung / Ultimo aggiornamento: ...</div>
+    <iframe id="andata" src=""></iframe>
+    <div style="text-align: center;">
+      <button class="refresh-button" onclick="reloadFrame('andata')">🔄 Manuell aktualisieren / Aggiorna manualmente</button>
+    </div>
   </div>
 
   <div class="box">
-    <h2>Posti Ritorno / Rückfahrt</h2>
-    <iframe id="ritorno" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1767518393&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <h2>Rückfahrt / Posti Ritorno</h2>
+    <div class="update-info" id="updateRitorno">🔄 Letzte Aktualisierung / Ultimo aggiornamento: ...</div>
+    <iframe id="ritorno" src=""></iframe>
+    <div style="text-align: center;">
+      <button class="refresh-button" onclick="reloadFrame('ritorno')">🔄 Manuell aktualisieren / Aggiorna manualmente</button>
+    </div>
   </div>
 
   <script>
+    const srcAndata = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1313010596&single=true&widget=true&headers=false";
+    const srcRitorno = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1767518393&single=true&widget=true&headers=false";
+
+    function reloadFrame(id) {
+      const frame = document.getElementById(id);
+      const src = (id === "andata") ? srcAndata : srcRitorno;
+      frame.src = src + "&t=" + new Date().getTime();
+      updateTimestamp(id);
+    }
+
+    function updateTimestamp(id) {
+      const now = new Date();
+      const time = now.toLocaleTimeString("de-DE");
+      const label = `🔄 Letzte Aktualisierung / Ultimo aggiornamento: ${time}`;
+      document.getElementById("update" + (id.charAt(0).toUpperCase() + id.slice(1))).textContent = label;
+    }
+
+    // Caricamento iniziale
+    reloadFrame("andata");
+    reloadFrame("ritorno");
+
+    // Aggiornamento ogni 20 secondi
     setInterval(() => {
-      document.getElementById("andata").src += "";
-      document.getElementById("ritorno").src += "";
-    }, 20000); // ogni 20 secondi
+      reloadFrame("andata");
+      reloadFrame("ritorno");
+    }, 20000);
   </script>
 
 </body>

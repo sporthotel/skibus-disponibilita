@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Skibus - Verfügbare Plätze</title>
+  <title>Skibus - Verfügbare Plätze & Formular</title>
+  <script src="https://unpkg.com/tabletop@1.6.4/tabletop.js"></script>
   <style>
     body {
       font-family: sans-serif;
@@ -51,17 +51,12 @@
     <tbody></tbody>
   </table>
 
-  <script>
-    const publicCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pub?output=csv";
+  <h2>📝 Buchungsformular / Modulo di Prenotazione</h2>
+  <iframe src="https://www.cognitoforms.com/f/aBV3tAulW0uGumhc-X2ypQ/1" allow="payment" style="border:0;width:100%;" height="1594"></iframe>
+  <script src="https://www.cognitoforms.com/f/iframe.js"></script>
 
-    async function loadCSV(url) {
-      const res = await fetch(url);
-      const text = await res.text();
-      const rows = text.trim().split('\n').map(line => line.split(','));
-      const headers = rows[0];
-      const data = rows.slice(1).map(row => Object.fromEntries(row.map((val, i) => [headers[i], val])));
-      return data;
-    }
+  <script>
+    const publicURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pub?output=csv";
 
     function showData(data) {
       const andataBody = document.querySelector("#andata tbody");
@@ -83,9 +78,12 @@
       });
     }
 
-    window.addEventListener('DOMContentLoaded', async () => {
-      const data = await loadCSV(publicCSV);
-      showData(data);
+    window.addEventListener('DOMContentLoaded', () => {
+      Tabletop.init({
+        key: publicURL,
+        simpleSheet: true,
+        callback: showData
+      });
     });
   </script>
 </body>

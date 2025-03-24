@@ -9,11 +9,33 @@
       font-family: Arial, sans-serif;
       background-color: #f5f5f5;
       margin: 0;
-      padding: 20px;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 30px;
+    }
+
+    .header {
+      width: 100%;
+      background: linear-gradient(90deg, #2b7a78, #3aafa9);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .header img {
+      width: 28px;
+      height: 28px;
+      margin-right: 12px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      margin: 0;
     }
 
     .box {
@@ -22,12 +44,13 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       padding: 20px 25px;
       max-width: 600px;
-      width: 100%;
+      width: 90%;
+      margin-top: 10px;
     }
 
     h2 {
       text-align: center;
-      font-size: 24px;
+      font-size: 22px;
       margin-bottom: 15px;
       color: #333;
     }
@@ -43,20 +66,36 @@
       iframe {
         height: 500px;
       }
+
+      .header h1 {
+        font-size: 18px;
+      }
     }
   </style>
 </head>
 <body>
 
+  <div class="header">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/bus.png" alt="Bus Icon">
+    <h1>Disponibilità Skibus / Skibus Verfügbarkeit</h1>
+  </div>
+
   <div class="box">
     <h2>Posti Andata / Hinfahrt</h2>
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1313010596&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <iframe id="andata" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1313010596&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
   </div>
 
   <div class="box">
     <h2>Posti Ritorno / Rückfahrt</h2>
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1767518393&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <iframe id="ritorno" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1767518393&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
   </div>
+
+  <script>
+    setInterval(() => {
+      document.getElementById("andata").src += "";
+      document.getElementById("ritorno").src += "";
+    }, 20000); // ogni 20 secondi
+  </script>
 
 </body>
 </html>

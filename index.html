@@ -121,4 +121,42 @@
 
   <div class="form-container">
     <h2 style="text-align:center; margin-bottom: 20px;">Reservierungsformular / Modulo di Prenotazione</h2>
-    <iframe src="https://www.cognitoforms.com/sporthotelkalcherhof/skibusreservierunghoteljaufenpassskipistenprenotazioneskibushotelpistedascidelpassogi
+    <iframe src="https://www.cognitoforms.com/sporthotelkalcherhof/skibusreservierunghoteljaufenpassskipistenprenotazioneskibushotelpistedascidelpassogiovo"></iframe>
+  </div>
+
+  <div class="box">
+    <h2>Hinfahrt / Posti Andata</h2>
+    <div class="update-info" id="updateAndata">🔄 Letzte Aktualisierung / Ultimo aggiornamento: ...</div>
+    <iframe id="andata" src=""></iframe>
+  </div>
+
+  <div class="box">
+    <h2>Rückfahrt / Posti Ritorno</h2>
+    <div class="update-info" id="updateRitorno">🔄 Letzte Aktualisierung / Ultimo aggiornamento: ...</div>
+    <iframe id="ritorno" src=""></iframe>
+  </div>
+
+  <script>
+    const srcAndata = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1313010596&single=true&widget=true&headers=false";
+    const srcRitorno = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1105118262&single=true&widget=true&headers=false";
+
+    function reloadFrame(id, src) {
+      const frame = document.getElementById(id);
+      frame.src = src + "&t=" + new Date().getTime();
+      const now = new Date();
+      const time = now.toLocaleTimeString("de-DE");
+      const label = `🔄 Letzte Aktualisierung / Ultimo aggiornamento: ${time}`;
+      document.getElementById("update" + id.charAt(0).toUpperCase() + id.slice(1)).textContent = label;
+    }
+
+    function reloadAll() {
+      reloadFrame("andata", srcAndata);
+      reloadFrame("ritorno", srcRitorno);
+    }
+
+    reloadAll();
+    setInterval(reloadAll, 20000);
+  </script>
+
+</body>
+</html>

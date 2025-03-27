@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Skibus – Fahrplan für Fahrer / Programma Skibus per Autisti</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 40px;
+      margin-bottom: 10px;
+    }
+
+    .box {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 15px;
+      margin-bottom: 30px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    iframe {
+      width: 100%;
+      height: 460px;
+      border: none;
+      border-radius: 6px;
+    }
+
+    .last-update {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Skibus – Fahrplan für Fahrer / Programma Skibus per Autisti</h1>
+
+  <div class="box">
+    <h2>Heute / Oggi</h2>
+    <div class="last-update" id="updateHeute">🔄 Letzte Aktualisierung / Ultimo aggiornamento: ...</div>
+    <iframe id="heute" src=""></iframe>
+  </div>
+
+  <div class="box">
+    <h2>Morgen / Domani</h2>
+    <div class="last-update" id="updateMorgen">🔄 Letzte Aktualisierung / Ultimo aggiornamento: ...</div>
+    <iframe id="morgen" src=""></iframe>
+  </div>
+
+  <script>
+    const urlHeute = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1842151237&single=true&widget=true&headers=false";
+    const urlMorgen = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1151084451&single=true&widget=true&headers=false";
+
+    function aggiornaFrame(id, url) {
+      const frame = document.getElementById(id);
+      frame.src = url + "&t=" + new Date().getTime();
+
+      const now = new Date();
+      const orario = now.toLocaleTimeString("de-DE");
+      document.getElementById("update" + id.charAt(0).toUpperCase() + id.slice(1)).textContent =
+        `🔄 Letzte Aktualisierung / Ultimo aggiornamento: ${orario}`;
+    }
+
+    function aggiornaTutto() {
+      aggiornaFrame("heute", urlHeute);
+      aggiornaFrame("morgen", urlMorgen);
+    }
+
+    aggiornaTutto();
+    setInterval(aggiornaTutto, 20000);
+  </script>
+
+</body>
+</html>

@@ -74,7 +74,7 @@
     }
 
     #andata, #ritorno {
-      height: 540px; /* altezza aumentata per contenere righe doppie */
+      height: 540px;
     }
 
     .form-container iframe {
@@ -118,7 +118,7 @@
   <div class="intro">
     <p>Bitte füllen Sie das Formular unten aus, um Ihren Platz im Skibus zu reservieren.</p>
     <p>Compila il modulo qui sotto per prenotare il tuo posto sullo Skibus.</p>
-    <p>Die Verfügbarkeit ist weiter unten sichtbar und aktualisiert sich automaticamente alle 20 Sekunden.</p>
+    <p>Die Verfügbarkeit ist weiter unten sichtbar und aktualisiert sich automatisch alle 20 Sekunden.</p>
     <p>La disponibilità è visibile più in basso e si aggiorna automaticamente ogni 20 secondi.</p>
   </div>
 
@@ -158,4 +158,8 @@
     }
 
     reloadAll();
-    setInterval(reloadAll,
+    setInterval(reloadAll, 20000);
+  </script>
+
+</body>
+</html>

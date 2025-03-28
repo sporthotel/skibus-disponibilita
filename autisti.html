@@ -50,9 +50,14 @@
   <div class="update-info" id="updateMorgen">🔄 Letzte Aktualisierung / Ultimo aggiornamento: ...</div>
   <iframe id="morgen" src=""></iframe>
 
+  <h2>🔵 Riepilogo Fermate – Andata e Ritorno</h2>
+  <div class="update-info" id="updateFermate">🔄 Letzte Aktualisierung / Ultimo aggiornamento: ...</div>
+  <iframe id="fermate" src=""></iframe>
+
   <script>
     const srcHeute = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=754880945&single=true&widget=true&headers=false";
     const srcMorgen = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=5948761&single=true&widget=true&headers=false";
+    const srcFermate = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQl2PzUeWZs8Ox9B0Z-pvaikEcyh67eTKQGKHRMHSWhAB1oNqUjH5v5vtWYwURp3JkCx4XJF3o6G2tH/pubhtml?gid=1713738653&single=true&widget=true&headers=false";
 
     function reloadFrame(id, src) {
       const frame = document.getElementById(id);
@@ -66,6 +71,7 @@
     function reloadAll() {
       reloadFrame("heute", srcHeute);
       reloadFrame("morgen", srcMorgen);
+      reloadFrame("fermate", srcFermate);
     }
 
     reloadAll();
